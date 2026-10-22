@@ -21,6 +21,20 @@
 
 <div class="main-content">
     <div class="container-lg">
+        @if ($errors->any())
+            <div class="alert-custom alert-error-custom mb-4" role="alert">
+                <i class="bi bi-exclamation-circle-fill fs-5"></i>
+                <div>
+                    <strong>Booking belum dapat disimpan.</strong>
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            </div>
+        @endif
+
         <div class="row justify-content-center">
             <div class="col-lg-7 col-xl-6">
 
@@ -147,13 +161,7 @@
                                     <button type="submit" class="btn-primary-custom flex-fill justify-content-center">
                                         <i class="bi bi-check-lg"></i> Simpan Booking
                                     </button>
-                                    <a href="{{ route('bookings.index') }}"
-                                       style="flex:1;display:inline-flex;align-items:center;justify-content:center;gap:7px;
-                                              padding:10px 20px;border-radius:10px;border:1.5px solid #e2e8f0;
-                                              color:#64748b;font-size:0.875rem;font-weight:600;text-decoration:none;
-                                              transition:all 0.2s;background:#f8fafc;"
-                                       onmouseover="this.style.background='#f1f5f9'"
-                                       onmouseout="this.style.background='#f8fafc'">
+                                    <a href="{{ route('bookings.index') }}" class="btn-secondary-custom flex-fill">
                                         <i class="bi bi-x-lg"></i> Batal
                                     </a>
                                 </div>

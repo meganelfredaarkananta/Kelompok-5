@@ -16,8 +16,9 @@
                     <i class="bi bi-calendar2-check me-2" style="font-size:1.4rem;"></i>
                     Daftar Booking Kendaraan
                 </h1>
+                <p class="hero-sub mb-0 mt-2">Pantau dan kelola seluruh penyewaan kendaraan Anda.</p>
             </div>
-            <a href="{{ route('bookings.create') }}" class="btn-primary-custom" style="background:rgba(255,255,255,0.2); box-shadow:none; border:1.5px solid rgba(255,255,255,0.4); backdrop-filter:blur(8px);">
+            <a href="{{ route('bookings.create') }}" class="btn-primary-custom btn-hero">
                 <i class="bi bi-plus-lg"></i> Tambah Booking
             </a>
         </div>
@@ -85,15 +86,19 @@
         {{-- TABLE CARD --}}
         <div class="table-card">
             <div class="table-card-header">
-                <div class="table-card-title">
-                    <span style="background:#dbeafe;color:#2563eb;width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;">
-                        <i class="bi bi-table"></i>
-                    </span>
-                    Semua Data Booking
+                <div>
+                    <div class="table-card-title">
+                        <span class="table-heading-icon">
+                            <i class="bi bi-table"></i>
+                        </span>
+                        Semua Data Booking
+                    </div>
+                    <p class="table-card-subtitle">Informasi penyewa, kendaraan, dan status pesanan.</p>
                 </div>
-                <a href="{{ route('bookings.create') }}" class="btn-primary-custom" style="padding:8px 16px;font-size:0.82rem;">
-                    <i class="bi bi-plus-lg"></i> Tambah Baru
-                </a>
+                <span class="table-count">
+                    <i class="bi bi-collection"></i>
+                    <strong>{{ $bookings->count() }}</strong> data
+                </span>
             </div>
 
             <div class="table-responsive">

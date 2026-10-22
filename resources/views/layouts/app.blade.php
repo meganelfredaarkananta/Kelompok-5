@@ -14,17 +14,17 @@
 
     <style>
         :root {
-            --primary: #2563eb;
-            --primary-dark: #1d4ed8;
-            --primary-light: #dbeafe;
+            --primary: #315ee8;
+            --primary-dark: #2449c7;
+            --primary-light: #e7edff;
             --secondary: #64748b;
             --success: #059669;
             --warning: #d97706;
             --danger: #dc2626;
-            --surface: #f8fafc;
+            --surface: #f5f7fc;
             --card-bg: #ffffff;
-            --border: #e2e8f0;
-            --text-primary: #0f172a;
+            --border: #e5eaf3;
+            --text-primary: #17233d;
             --text-secondary: #64748b;
             --text-muted: #94a3b8;
             --sidebar-width: 250px;
@@ -34,15 +34,17 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            background-color: var(--surface);
+            background:
+                radial-gradient(ellipse at 8% 0%, rgba(49, 94, 232, 0.06), transparent 28rem),
+                var(--surface);
             color: var(--text-primary);
             min-height: 100vh;
         }
 
         /* ── NAVBAR ── */
         .navbar-main {
-            background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 60%, #3b82f6 100%);
-            box-shadow: 0 4px 20px rgba(37, 99, 235, 0.3);
+            background: linear-gradient(110deg, #111b35 0%, #182b55 58%, #315ee8 100%);
+            box-shadow: 0 8px 28px rgba(17, 27, 53, 0.18);
             padding: 0;
         }
 
@@ -55,17 +57,20 @@
             font-size: 1.25rem;
             text-decoration: none;
             padding: 14px 20px;
+            letter-spacing: -0.03em;
         }
 
         .navbar-brand-custom .brand-icon {
             width: 38px;
             height: 38px;
-            background: rgba(255,255,255,0.2);
-            border-radius: 10px;
+            background: rgba(255,255,255,0.12);
+            border: 1px solid rgba(255,255,255,0.16);
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 1.1rem;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.12);
         }
 
         .navbar-brand-custom .brand-sub {
@@ -87,10 +92,10 @@
             display: flex;
             align-items: center;
             gap: 7px;
-            color: rgba(255,255,255,0.85);
+            color: rgba(255,255,255,0.72);
             text-decoration: none;
-            padding: 10px 16px;
-            border-radius: 8px;
+            padding: 10px 14px;
+            border-radius: 10px;
             font-size: 0.875rem;
             font-weight: 500;
             transition: all 0.2s ease;
@@ -98,33 +103,39 @@
 
         .nav-item-custom a:hover,
         .nav-item-custom a.active {
-            background: rgba(255,255,255,0.15);
+            background: rgba(255,255,255,0.13);
             color: #ffffff;
         }
 
         /* ── HERO BANNER ── */
         .page-hero {
-            background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 60%, #3b82f6 100%);
-            padding: 36px 0 56px;
+            background: linear-gradient(115deg, #172442 0%, #213d77 55%, #315ee8 100%);
+            padding: 42px 0 58px;
             position: relative;
             overflow: hidden;
+        }
+
+        .page-hero .container-lg {
+            position: relative;
+            z-index: 1;
         }
 
         .page-hero::before {
             content: '';
             position: absolute;
-            top: -60px; right: -60px;
-            width: 280px; height: 280px;
-            background: rgba(255,255,255,0.05);
+            top: -130px; right: 8%;
+            width: 330px; height: 330px;
+            border: 1px solid rgba(255,255,255,0.12);
             border-radius: 50%;
+            box-shadow: 0 0 0 34px rgba(255,255,255,0.035), 0 0 0 68px rgba(255,255,255,0.025);
         }
 
         .page-hero::after {
             content: '';
             position: absolute;
-            bottom: -80px; left: -40px;
-            width: 220px; height: 220px;
-            background: rgba(255,255,255,0.04);
+            bottom: -150px; left: 24%;
+            width: 260px; height: 260px;
+            background: rgba(255,255,255,0.035);
             border-radius: 50%;
         }
 
@@ -133,17 +144,21 @@
             font-weight: 700;
             color: #ffffff;
             margin-bottom: 6px;
+            letter-spacing: -0.035em;
         }
 
         .page-hero .hero-sub {
             color: rgba(255,255,255,0.75);
             font-size: 0.9rem;
+            letter-spacing: 0.01em;
         }
 
         /* ── MAIN CONTENT ── */
         .main-content {
-            margin-top: -32px;
-            padding-bottom: 48px;
+            position: relative;
+            z-index: 1;
+            margin-top: -34px;
+            padding-bottom: 56px;
         }
 
         /* ── STAT CARDS ── */
@@ -156,12 +171,13 @@
             display: flex;
             align-items: center;
             gap: 16px;
-            transition: all 0.25s ease;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
         }
 
         .stat-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 30px rgba(37, 99, 235, 0.12);
+            transform: translateY(-4px);
+            border-color: #d5def7;
+            box-shadow: 0 14px 30px rgba(31, 54, 105, 0.1);
         }
 
         .stat-icon {
@@ -196,7 +212,7 @@
         .table-card {
             background: var(--card-bg);
             border-radius: 16px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
+            box-shadow: 0 2px 6px rgba(20, 35, 70, 0.035), 0 12px 32px rgba(20, 35, 70, 0.055);
             border: 1px solid var(--border);
             overflow: hidden;
         }
@@ -220,14 +236,49 @@
             gap: 8px;
         }
 
+        .table-card-subtitle {
+            color: var(--text-secondary);
+            font-size: 0.82rem;
+            margin: 4px 0 0 40px;
+        }
+
+        .table-heading-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 34px;
+            height: 34px;
+            border-radius: 10px;
+            background: var(--primary-light);
+            color: var(--primary);
+        }
+
+        .table-count {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 8px 12px;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .table-count strong {
+            color: var(--text-primary);
+        }
+
         /* ── CUSTOM TABLE ── */
         .table-custom {
             width: 100%;
+            min-width: 980px;
             border-collapse: collapse;
         }
 
         .table-custom thead th {
-            background: #f1f5f9;
+            background: #f7f9fd;
             color: var(--text-secondary);
             font-size: 0.75rem;
             font-weight: 600;
@@ -238,14 +289,18 @@
             white-space: nowrap;
         }
 
+        .table-responsive {
+            scrollbar-color: #cbd5e1 transparent;
+        }
+
         .table-custom tbody tr {
-            border-bottom: 1px solid #f1f5f9;
+            border-bottom: 1px solid #f0f3f8;
             transition: background 0.15s;
         }
 
         .table-custom tbody tr:last-child { border-bottom: none; }
 
-        .table-custom tbody tr:hover { background: #f8fafc; }
+        .table-custom tbody tr:hover { background: #f8faff; }
 
         .table-custom tbody td {
             padding: 14px 16px;
@@ -285,10 +340,10 @@
 
         /* ── BUTTONS ── */
         .btn-primary-custom {
-            background: linear-gradient(135deg, #2563eb, #3b82f6);
+            background: linear-gradient(135deg, #315ee8, #4776f4);
             color: #fff;
             border: none;
-            border-radius: 10px;
+            border-radius: 11px;
             padding: 10px 20px;
             font-size: 0.875rem;
             font-weight: 600;
@@ -297,15 +352,49 @@
             gap: 7px;
             text-decoration: none;
             transition: all 0.2s ease;
-            box-shadow: 0 2px 8px rgba(37, 99, 235, 0.35);
+            box-shadow: 0 5px 14px rgba(49, 94, 232, 0.24);
             cursor: pointer;
         }
 
         .btn-primary-custom:hover {
-            background: linear-gradient(135deg, #1d4ed8, #2563eb);
+            background: linear-gradient(135deg, #2449c7, #315ee8);
             color: #fff;
             transform: translateY(-1px);
-            box-shadow: 0 6px 16px rgba(37, 99, 235, 0.4);
+            box-shadow: 0 8px 18px rgba(49, 94, 232, 0.3);
+        }
+
+        .btn-hero {
+            background: rgba(255,255,255,0.12);
+            border: 1px solid rgba(255,255,255,0.25);
+            box-shadow: none;
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-hero:hover {
+            background: rgba(255,255,255,0.2);
+            box-shadow: none;
+        }
+
+        .btn-secondary-custom {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 7px;
+            padding: 10px 20px;
+            border: 1px solid var(--border);
+            border-radius: 11px;
+            background: #fff;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+        }
+
+        .btn-secondary-custom:hover {
+            border-color: #cbd5e1;
+            background: #f8faff;
+            color: var(--text-primary);
         }
 
         .btn-action {
@@ -330,8 +419,8 @@
         /* ── FORM CARD ── */
         .form-card {
             background: var(--card-bg);
-            border-radius: 20px;
-            box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+            border-radius: 18px;
+            box-shadow: 0 3px 8px rgba(20, 35, 70, 0.04), 0 16px 40px rgba(20, 35, 70, 0.07);
             border: 1px solid var(--border);
             overflow: hidden;
         }
@@ -384,8 +473,8 @@
         .form-control-custom:focus,
         .form-select-custom:focus {
             outline: none;
-            border-color: #2563eb;
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(49, 94, 232, 0.11);
         }
 
         textarea.form-control-custom { resize: vertical; }
@@ -405,6 +494,22 @@
             background: #d1fae5;
             color: #065f46;
             border: 1px solid #6ee7b7;
+        }
+
+        .alert-error-custom {
+            background: #fff5f5;
+            color: #991b1b;
+            border: 1px solid #fecaca;
+        }
+
+        .alert-error-custom ul {
+            margin: 4px 0 0;
+            padding-left: 1.15rem;
+        }
+
+        .form-control-custom.is-invalid,
+        .form-select-custom.is-invalid {
+            border-color: #ef4444;
         }
 
         /* ── EMPTY STATE ── */
@@ -439,9 +544,30 @@
 
         /* ── RESPONSIVE ── */
         @media (max-width: 576px) {
-            .page-hero { padding: 28px 0 48px; }
+            .page-hero { padding: 30px 0 50px; }
             .page-hero .hero-title { font-size: 1.4rem; }
             .table-responsive { overflow-x: auto; }
+            .navbar-brand-custom { padding: 12px 0; font-size: 1.1rem; }
+            .navbar-brand-custom .brand-sub { font-size: 0.64rem; }
+            .navbar-main .container-lg { padding-inline: 16px; }
+            .main-content { padding-bottom: 36px; }
+            .stat-card { gap: 11px; padding: 16px 14px; border-radius: 14px; }
+            .stat-icon { width: 42px; height: 42px; border-radius: 12px; font-size: 1.15rem; }
+            .stat-value { font-size: 1.35rem; }
+            .table-card-header { padding: 18px; }
+            .form-card-header, .form-card-body { padding: 20px; }
+            .form-card-header h4 { font-size: 1rem; }
+            .table-card-subtitle { margin-left: 0; }
+            .footer-custom { padding: 16px 20px; line-height: 1.6; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                scroll-behavior: auto !important;
+                transition-duration: 0.01ms !important;
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+            }
         }
     </style>
 </head>
