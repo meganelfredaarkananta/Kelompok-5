@@ -1,68 +1,187 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <title>Sistem Booking Sewa Kendaraan</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body class="bg-light">
-<div class="container mt-5">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2>Daftar Booking Sewa Mobil & Motor</h2>
-        <a href="{{ route('bookings.create') }}" class="btn btn-primary">+ Tambah Booking</a>
-    </div>
+@extends('layouts.app')
 
-    @if(session('success'))
-        <div class="alert alert-success">{{ session('success') }}</div>
-    @endif
+@section('title', 'Daftar Booking - RentWheels')
 
-    <div class="card shadow-sm">
-        <div class="card-body">
-            <table class="table table-bordered table-striped align-middle">
-                <thead class="table-dark">
-                    <tr>
-                        <th>Nama Pemesan</th>
-                        <th>No HP</th>
-                        <th>Jenis</th>
-                        <th>Kendaraan</th>
-                        <th>Tgl Sewa</th>
-                        <th>Lama</th>
-                        <th>Status</th>
-                        <th>Aksi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @forelse($bookings as $b)
-                        <tr>
-                            <td>{{ $b->nama_pemesan }}</td>
-                            <td>{{ $b->no_hp }}</td>
-                            <td><span class="badge bg-info text-dark">{{ ucfirst($b->jenis_kendaraan) }}</span></td>
-                            <td>{{ $b->nama_kendaraan }}</td>
-                            <td>{{ $b->tanggal_sewa }}</td>
-                            <td>{{ $b->lama_sewa }} Hari</td>
-                            <td>
-                                <span class="badge bg-{{ $b->status == 'menunggu' ? 'warning' : ($b->status == 'disetujui' ? 'success' : 'danger') }}">
-                                    {{ ucfirst($b->status) }}
-                                </span>
-                            </td>
-                            <td>
-                                <a href="{{ route('bookings.edit', $b->id) }}" class="btn btn-sm btn-warning">Edit</a>
-                                <form action="{{ route('bookings.destroy', $b->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin ingin menghapus?')">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button class="btn btn-sm btn-danger">Hapus</button>
-                                </form>
-                            </td>
-                        </tr>
-                    @empty
-                        <tr>
-                            <td colspan="8" class="text-center">Belum ada data booking.</td>
-                        </tr>
-                    @endforelse
-                </tbody>
-            </table>
+@section('content')
+
+{{-- HERO BANNER --}}
+<div class="page-hero">
+    <div class="container-lg">
+        <div class="d-flex align-items-center justify-content-between flex-wrap gap-3">
+            <div>
+                <p class="hero-sub mb-1">
+                    <i class="bi bi-house-door me-1"></i> Dashboard
+                </p>
+                <h1 class="hero-title mb-0">
+                    <i class="bi bi-calendar2-check me-2" style="font-size:1.4rem;"></i>
+                    Daftar Booking Kendaraan
+                </h1>
+            </div>
+            <a href="{{ route('bookings.create') }}" class="btn-primary-custom" style="background:rgba(255,255,255,0.2); box-shadow:none; border:1.5px solid rgba(255,255,255,0.4); backdrop-filter:blur(8px);">
+                <i class="bi bi-plus-lg"></i> Tambah Booking
+            </a>
         </div>
     </div>
 </div>
-</body>
-</html>
+
+<div class="main-content">
+    <div class="container-lg">
+
+        {{-- ALERT --}}
+        @if(session('success'))
+            <div class="alert-custom alert-success-custom mb-4">
+                <i class="bi bi-check-circle-fill fs-5"></i>
+                <span>{{ session('success') }}</span>
+            </div>
+        @endif
+
+        {{-- STAT CARDS --}}
+        @php
+            $total     = $bookings->count();
+            $menunggu  = $bookings->where('status','menunggu')->count();
+            $disetujui = $bookings->where('status','disetujui')->count();
+            $selesai   = $bookings->where('status','selesai')->count();
+        @endphp
+
+        <div class="row g-3 mb-4">
+            <div class="col-6 col-md-3">
+                <div class="stat-card">
+                    <div class="stat-icon blue"><i class="bi bi-collection-fill"></i></div>
+                    <div>
+                        <div class="stat-label">Total Booking</div>
+                        <div class="stat-value">{{ $total }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="stat-card">
+                    <div class="stat-icon yellow"><i class="bi bi-clock-fill"></i></div>
+                    <div>
+                        <div class="stat-label">Menunggu</div>
+                        <div class="stat-value">{{ $menunggu }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="stat-card">
+                    <div class="stat-icon green"><i class="bi bi-check-circle-fill"></i></div>
+                    <div>
+                        <div class="stat-label">Disetujui</div>
+                        <div class="stat-value">{{ $disetujui }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="stat-card">
+                    <div class="stat-icon blue"><i class="bi bi-flag-fill"></i></div>
+                    <div>
+                        <div class="stat-label">Selesai</div>
+                        <div class="stat-value">{{ $selesai }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{-- TABLE CARD --}}
+        <div class="table-card">
+            <div class="table-card-header">
+                <div class="table-card-title">
+                    <span style="background:#dbeafe;color:#2563eb;width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;">
+                        <i class="bi bi-table"></i>
+                    </span>
+                    Semua Data Booking
+                </div>
+                <a href="{{ route('bookings.create') }}" class="btn-primary-custom" style="padding:8px 16px;font-size:0.82rem;">
+                    <i class="bi bi-plus-lg"></i> Tambah Baru
+                </a>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table-custom">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th><i class="bi bi-person me-1"></i>Nama Pemesan</th>
+                            <th><i class="bi bi-telephone me-1"></i>No HP</th>
+                            <th><i class="bi bi-tag me-1"></i>Jenis</th>
+                            <th><i class="bi bi-car-front me-1"></i>Kendaraan</th>
+                            <th><i class="bi bi-calendar me-1"></i>Tgl Sewa</th>
+                            <th><i class="bi bi-clock me-1"></i>Lama</th>
+                            <th><i class="bi bi-circle-half me-1"></i>Status</th>
+                            <th style="text-align:center;">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse($bookings as $i => $b)
+                        <tr>
+                            <td style="color:var(--text-muted);font-size:0.78rem;font-weight:600;">{{ $i + 1 }}</td>
+                            <td>
+                                <div style="font-weight:600;">{{ $b->nama_pemesan }}</div>
+                            </td>
+                            <td style="color:var(--text-secondary);">{{ $b->no_hp }}</td>
+                            <td>
+                                <span class="badge-jenis {{ $b->jenis_kendaraan }}">
+                                    <i class="bi bi-{{ $b->jenis_kendaraan == 'mobil' ? 'car-front' : 'bicycle' }}"></i>
+                                    {{ ucfirst($b->jenis_kendaraan) }}
+                                </span>
+                            </td>
+                            <td style="font-weight:500;">{{ $b->nama_kendaraan }}</td>
+                            <td style="color:var(--text-secondary);">
+                                <i class="bi bi-calendar3 me-1" style="color:var(--text-muted);"></i>
+                                {{ \Carbon\Carbon::parse($b->tanggal_sewa)->format('d M Y') }}
+                            </td>
+                            <td>
+                                <span style="background:#f1f5f9;color:#475569;padding:3px 10px;border-radius:6px;font-size:0.78rem;font-weight:600;">
+                                    {{ $b->lama_sewa }} Hari
+                                </span>
+                            </td>
+                            <td>
+                                @php
+                                    $statusMap = [
+                                        'menunggu'  => ['icon'=>'clock-fill',       'label'=>'Menunggu'],
+                                        'disetujui' => ['icon'=>'check-circle-fill', 'label'=>'Disetujui'],
+                                        'selesai'   => ['icon'=>'flag-fill',         'label'=>'Selesai'],
+                                        'batal'     => ['icon'=>'x-circle-fill',     'label'=>'Batal'],
+                                    ];
+                                    $s = $statusMap[$b->status] ?? ['icon'=>'circle','label'=>ucfirst($b->status)];
+                                @endphp
+                                <span class="badge-status {{ $b->status }}">
+                                    <i class="bi bi-{{ $s['icon'] }}"></i>
+                                    {{ $s['label'] }}
+                                </span>
+                            </td>
+                            <td>
+                                <div class="d-flex justify-content-center gap-2">
+                                    <a href="{{ route('bookings.edit', $b->id) }}" class="btn-action edit" title="Edit Booking">
+                                        <i class="bi bi-pencil-fill"></i>
+                                    </a>
+                                    <form action="{{ route('bookings.destroy', $b->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin ingin menghapus booking ini?')">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn-action delete" title="Hapus Booking">
+                                            <i class="bi bi-trash-fill"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                        @empty
+                        <tr>
+                            <td colspan="9">
+                                <div class="empty-state">
+                                    <i class="bi bi-inbox" style="color:#cbd5e1;"></i>
+                                    <div style="font-size:1rem;font-weight:600;color:#94a3b8;margin-bottom:6px;">Belum ada data booking</div>
+                                    <p style="font-size:0.85rem;color:#cbd5e1;margin:0;">Klik tombol <strong>Tambah Booking</strong> untuk memulai.</p>
+                                </div>
+                            </td>
+                        </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@endsection
