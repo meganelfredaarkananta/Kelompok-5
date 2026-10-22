@@ -1,58 +1,66 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Deskripsi Sistem
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Disini kami Kelompok 5 membuat Sistem Booking Jasa Sewa Mobil & Motor,Sistem Booking Jasa Sewa Mobil & Motor adalah aplikasi berbasis web yang dibangun menggunakan *framework* **Laravel** untuk mengelola transaksi pemesanan rental kendaraan secara terstruktur dan efisien.
 
-## About Laravel
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Fitur Utama
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Aplikasi ini menyediakan fungsionalidad pengelolaan data pemesanan secara penuh (**CRUD - Create, Read, Update, Delete**):
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+* Daftar Pemesanan (Read): Menampilkan seluruh data transaksi booking dalam bentuk tabel yang teratur beserta indikator status pemesanan.
+* Formulir Tambah Booking (Create): Mengakomodasi pendaftaran sewa baru dengan validasi data input (nama, nomor HP, jenis kendaraan, nama kendaraan, tanggal, durasi sewa, dan catatan).
+* Edit Data & Status (Update): Memperbarui rincian pemesanan dan mengubah status transaksi (`menunggu`, `disetujui`, `selesai`, atau `batal`).
+* Hapus Pemesanan (Delete): Menghapus rekaman transaksi yang dibatalkan atau tidak valid dari database.
 
-## Learning Laravel
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Spesifikasi Teknologi
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+| Komponen | Teknologi / Alat |
+| :--- | :--- |
+| **Framework Backend** | Laravel |
+| **Bahasa Pemrograman** | PHP |
+| **Database Engine** | MySQL |
+| **User Interface** | HTML5, CSS3, Bootstrap |
+| **Server Lokal** | Laragon |
+| **Database Tooling** | HeidiSQL & VS Code Database Client |
+| **Version Control** | Git & GitHub |
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+---
 
-## Agentic Development
+## Skema Database
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+Aplikasi menggunakan tabel utama **`bookings`** dengan struktur kolom sebagai berikut:
 
-```bash
-composer require laravel/boost --dev
+| Nama Kolom | Tipe Data | Atribut | Keterangan |
+| :--- | :--- | :--- | :--- |
+| `id` | BigInt | Primary Key, Auto Increment | Identifikasi unik transaksi |
+| `nama_pemesan` | Varchar(255) | Not Null | Nama lengkap pelanggan |
+| `no_hp` | Varchar(50) | Not Null | Nomor kontak/WhatsApp |
+| `jenis_kendaraan` | Enum | 'mobil', 'motor' | Kategori kendaraan |
+| `nama_kendaraan` | Varchar(255) | Not Null | Merk/tipe kendaraan |
+| `tanggal_sewa` | Date | Not Null | Tanggal mulai sewa |
+| `lama_sewa` | Integer | Not Null | Durasi sewa (hari) |
+| `catatan` | Text | Nullable | Permintaan/catatan khusus |
+| `status` | Enum | Default 'menunggu' | Status (`menunggu`, `disetujui`, `selesai`, `batal`) |
 
-php artisan boost:install
-```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+## Struktur Kode Berkas Utama
 
-## Contributing
+* **`routes/web.php`**: Mengatur alur rute aplikasi dan mengarahkan halaman utama langsung ke antarmuka pemesanan.
+* **`app/Http/Controllers/BookingController.php`**: Mengendalikan logika bisnis, validasi form, serta pemrosesan data CRUD.
+* **`app/Models/Booking.php`**: Model Eloquent yang menghubungkan logika aplikasi dengan tabel `bookings`.
+* **`resources/views/bookings/`**: Komponen tampilan antarmuka berbasis Blade:
+  * `index.blade.php`: Halaman utama tabel data booking.
+  * `create.blade.php`: Form penambahan booking baru.
+  * `edit.blade.php`: Form pembaruan data dan status booking.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
 
-## Code of Conduct
+## Panduan Pengoperasian (Petunjuk Kolaborasi)
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Bagi anggota tim yang ingin menjalankan proyek ini di lingkungan lokal:
 
-## Security Vulnerabilities
+1. **Klon Repository:**
+   ```bash
+   git clone [https://github.com/meganelfredaarkananta/Kelompok-5.git](https://github.com/meganelfredaarkananta/Kelompok-5.git)
+   cd sistem-booking
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
